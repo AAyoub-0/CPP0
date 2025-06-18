@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:46:23 by aboumall          #+#    #+#             */
-/*   Updated: 2025/06/18 16:44:17 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:48:20 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHONE_BOOK_HPP
 
 #include "Contact.hpp"
+#include "vector"
 
 class PhoneBook
 {
@@ -21,21 +22,22 @@ class PhoneBook
 		Contact contacts[8];
 		int	index = 0;
 	public:
-		PhoneBook(Contact contacts[8]);
-		~PhoneBook();
+		PhoneBook(Contact *contacts, int size);
+		PhoneBook() = default;
 		void AddContact(Contact contact);
 };
 
-PhoneBook::PhoneBook(Contact *contacts)
+PhoneBook::PhoneBook(Contact *contacts, int size)
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < size; i++)
 	{
-		this->contacts[i] = contacts[i];
-		index++;
+		this->contacts[index] = contacts[i];
+		if (i < 7)
+			index++;
 	}
 }
 
-PhoneBook::~PhoneBook() {}
+PhoneBook::PhoneBook() {}
 
 void PhoneBook::AddContact(Contact contact)
 {
@@ -43,7 +45,7 @@ void PhoneBook::AddContact(Contact contact)
 		this->contacts[index] = contact;
 		index++;
 	} else {
-		index = 8;
+		index = 7;
 		this->contacts[index] = contact;
 	}
 }
