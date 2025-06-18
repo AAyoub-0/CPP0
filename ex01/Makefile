@@ -6,17 +6,17 @@
 #    By: aboumall <aboumall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/13 15:52:18 by aboumall          #+#    #+#              #
-#    Updated: 2025/06/13 16:25:28 by aboumall         ###   ########.fr        #
+#    Updated: 2025/06/18 19:53:20 by aboumall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET = megaphone
+TARGET = myphonebook
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = megaphone.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(TARGET)

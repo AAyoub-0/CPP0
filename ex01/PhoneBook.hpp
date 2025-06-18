@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:46:23 by aboumall          #+#    #+#             */
-/*   Updated: 2025/06/18 18:48:20 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:59:41 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ class PhoneBook
 {
 	private:
 		Contact contacts[8];
-		int	index = 0;
+		int	index;
 	public:
 		PhoneBook(Contact *contacts, int size);
-		PhoneBook() = default;
+		PhoneBook();
 		void AddContact(Contact contact);
 };
+
+PhoneBook::PhoneBook() : index(0) {};
 
 PhoneBook::PhoneBook(Contact *contacts, int size)
 {
@@ -36,8 +38,6 @@ PhoneBook::PhoneBook(Contact *contacts, int size)
 			index++;
 	}
 }
-
-PhoneBook::PhoneBook() {}
 
 void PhoneBook::AddContact(Contact contact)
 {
