@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:46:23 by aboumall          #+#    #+#             */
-/*   Updated: 2025/06/18 19:59:41 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:43:19 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class PhoneBook
 		PhoneBook(Contact *contacts, int size);
 		PhoneBook();
 		void AddContact(Contact contact);
+		Contact GetContact(int index);
 };
 
 PhoneBook::PhoneBook() : index(0) {};
@@ -48,6 +49,11 @@ void PhoneBook::AddContact(Contact contact)
 		index = 7;
 		this->contacts[index] = contact;
 	}
+}
+
+Contact PhoneBook::GetContact(int index)
+{
+	if (index > 7)
 }
 
 #endif
