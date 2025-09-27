@@ -6,9 +6,11 @@
 #    By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/13 15:52:18 by aboumall          #+#    #+#              #
-#    Updated: 2025/07/08 17:11:02 by aboumall         ###   ########.fr        #
+#    Updated: 2025/09/27 23:35:50 by aboumall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+HEADERS = Accounts.hpp
 
 TARGET = accounts
 

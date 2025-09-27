@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:40:30 by aboumall          #+#    #+#             */
-/*   Updated: 2025/07/08 00:45:28 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/09/28 00:39:20 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #define GREY "\033[90m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
+#define BLUE "\033[34m"
 #define RESET "\033[0m"
 
 static int ft_stoi(const std::string &str)
@@ -27,67 +28,88 @@ static int ft_stoi(const std::string &str)
 	int num;
 	iss >> num;
 	if (iss.fail() || !iss.eof())
-	{
-		std::cerr << "Invalid input: " << str << std::endl;
 		return -1;
-	}
 	return num;
 }
 
 static bool	check_line(std::string line)
 {
-	if (line.compare("ADD") != 0 && line.compare("SEARCH") != 0 && line.compare("EXIT") != 0)
+	if (line.compare("ADD") != 0 && line.compare("SEARCH") != 0
+		&& line.compare("EXIT") != 0)
 	{
-		std::cout << "Error: unknown command `" << line << "' . Please type ADD, SEARCH or EXIT" << std::endl;
+		std::cout << RED << "Error: unknown command"
+		 "`" << RESET << line << RED << "' . Please type ADD, SEARCH or EXIT"
+		 << RESET <<std::endl;
 		return (false);
 	}
 	return(true);
 }
 
-static void	print_contact(Contact contact, int index, int truncate)
+static void	print_contact(Contact *contact, int index, int truncate)
 {
 	if (index < 0 || index > 8)
 		return ;
+	if (contact == nullptr)
+	{
+		std::cout << RED << "Error: contact not found." << RESET << std::endl;
+		return ;
+	}
+	std::cout << std::endl;
+	std::cout << std::string(45, '-') << std::endl;
 	std::cout << BOLD << "Contact " << index << RESET << std::endl;
-	std::cout << std::left << std::setw(16) << "First Name " << ": " << GREY << contact.GetFirstName(truncate) << RESET << std::endl;
-	std::cout << std::left << std::setw(16) << "Last Name " << ": " << GREY << contact.GetLastName(truncate) << RESET << std::endl;
-	std::cout << std::left << std::setw(16) << "Phone Number " << ": " << GREY << contact.GetNum(truncate) << RESET << std::endl;
-	std::cout << std::left << std::setw(16) << "Nickname " << ": " << GREY << contact.GetNickname(truncate) << RESET << std::endl;
-	std::cout << std::left << std::setw(16) << "Darkest Secret " << ": " << GREY << contact.GetDarkestSecret() << RESET << std::endl;
+	std::cout << std::left << std::setw(16) << "First Name " << ": " << GREY << contact->GetFirstName(truncate) << RESET << std::endl;
+	std::cout << std::left << std::setw(16) << "Last Name " << ": " << GREY << contact->GetLastName(truncate) << RESET << std::endl;
+	std::cout << std::left << std::setw(16) << "Phone Number " << ": " << GREY << contact->GetNum(truncate) << RESET << std::endl;
+	std::cout << std::left << std::setw(16) << "Nickname " << ": " << GREY << contact->GetNickname(truncate) << RESET << std::endl;
+	std::cout << std::left << std::setw(16) << "Darkest Secret " << ": " << GREY << contact->GetDarkestSecret() << RESET << std::endl;
+	std::cout << std::string(45, '-') << std::endl;
+	std::cout << std::endl;
 }
 
-static void	print_contact_tab(Contact contact, int index, int truncate)
+static void	print_contact_tab(Contact *contact, int index, int truncate)
 {
 	std::cout << BOLD << std::setw(5) << index << " | "
-	          << std::setw(11) << contact.GetFirstName(truncate).substr(0, 10) << " | "
-	          << std::setw(10) << contact.GetLastName(truncate).substr(0, 10) << " | "
-	          << std::setw(10) << contact.GetNickname(truncate).substr(0, 10) << RESET << std::endl;
+	          << std::setw(11) << contact->GetFirstName(truncate).substr(0, 10) << " | "
+	          << std::setw(10) << contact->GetLastName(truncate).substr(0, 10) << " | "
+	          << std::setw(10) << contact->GetNickname(truncate).substr(0, 10) 
+			  << RESET << std::endl;
 }
 
 static void	print_header()
 {
-	std::cout << BOLD << std::setw(5) << "Index" << RESET << " | "
-	          << std::setw(11) << "First Name" << " | "
-	          << std::setw(10) << "Last Name" << " | "
-	          << std::setw(10) << "Nickname" << std::endl;
+	std::cout << std::setw(5)  << "Index" 		<< " | "
+	          << std::setw(11) << "First Name" 	<< " | "
+	          << std::setw(10) << "Last Name" 	<< " | "
+	          << std::setw(10) << "Nickname" 	<< std::endl;
 	std::cout << std::string(45, '-') << std::endl;
 }
 
-static void	print_contacts(PhoneBook *repertory)
+static bool	print_contacts(PhoneBook *repertory)
 {
-	Contact *contacts = repertory->GetContacts();
+	Contact *contact;
 	int i = 0;
 
-	print_header();
-	while (i < 8 && !contacts[i].GetNum(-1).empty())
+	std::cout << std::endl;
+	if (repertory->GetContact(i) == nullptr)
 	{
-		print_contact_tab(contacts[i], i + 1, 10);
-		i++;
+		std::cout << "No contacts found"
+		<< GREY << " (use command ADD to create new ones)" << RESET << std::endl;
+		std::cout << std::endl;
+		return (false);
 	}
-	if (i == 0)
-		std::cout << "No contacts found." << std::endl;
-	else 
-		std::cout << std::string(45, '-') << std::endl;
+	std::cout << BOLD << "Contacts List" << RESET << std::endl;
+	print_header();
+	while (i < 8)
+	{
+		contact = repertory->GetContact(i);
+		if (contact == nullptr)
+			break ;
+		print_contact_tab(contact, i + 1, 10);
+		i++;
+	} 
+	std::cout << std::string(45, '-') << std::endl;
+	std::cout << std::endl;
+	return (true);
 }
 
 static bool check_phone_number(const std::string &num)
@@ -115,84 +137,120 @@ static bool check_phone_number(const std::string &num)
 	return true;
 }
 
-static void	trait_command(std::string line, PhoneBook *repertory)
+static void	add_contact(std::string line, PhoneBook *repertory)
 {
 	int	i = 0;
-
-	if (line.compare("ADD") == 0)
+	Contact contact;
+	
+	std::cout << BOLD << "Adding new contact" << RESET << std::endl;
+	while (true)
 	{
-		Contact contact;
-		std::cout << BOLD<<"Adding new contact"<<RESET << std::endl;
-		while (true)
+		line.clear();
+		if (i == 0)
+			std::cout << std::left << std::setw(16) << "First Name " << ": ";
+		else if (i == 1)
+			std::cout << std::left << std::setw(16) << "Last Name " << ": ";
+		else if (i == 2)
+			std::cout << std::left << std::setw(16) << "Nickname " << ": ";
+		else if (i == 3)
+			std::cout << std::left << std::setw(16) << "Phone Number " << ": ";
+		else if (i == 4)
+			std::cout << std::left << std::setw(16) << "Darkest Secret " << ": ";
+		std::cout << GREY;
+		getline(std::cin, line);
+		std::cout << RESET;
+		if (i == 3)
 		{
-			line.clear();
-			if (i == 0)
-				std::cout << std::left << std::setw(16) << "First Name " << ": ";
-			else if (i == 1)
-				std::cout << std::left << std::setw(16) << "Last Name " << ": ";
-			else if (i == 2)
-				std::cout << std::left << std::setw(16) << "Nickname " << ": ";
-			else if (i == 3)
-				std::cout << std::left << std::setw(16) << "Phone Number " << ": ";
-			else if (i == 4)
-				std::cout << std::left << std::setw(16) << "Darkest Secret " << ": ";
-			std::cout << GREY;
-			getline(std::cin, line);
-			if (std::cin.eof())
+			if (!check_phone_number(line))
 			{
-				std::cout << std::endl;
-				return ;
-			}
-			if (line.empty())
+				std::cout << RED << "Invalid phone number format."
+					" Please try again with this format (+[Country code])[phone number]" 
+					<< RESET << std::endl;
 				continue ;
-			if (i == 3)
-			{
-				if (!check_phone_number(line))
-				{
-					std::cout << RESET;
-					std::cout << "Error: invalid phone number format. Please try again." << std::endl;
-					continue ;
-				}
 			}
-			std::cout << RESET;
-			if (i == 0)
-				contact.SetFirstName(line);
-			else if (i == 1)
-				contact.SetLastName(line);
-			else if (i == 2)
-				contact.SetNickname(line);
-			else if (i == 3)
-				contact.SetNum(line);
-			else if (i == 4)
-			{
-				contact.SetDarkestSecret(line);
-				break ;
-			}
-			i++;
 		}
-		repertory->AddContact(contact);
+		else
+		{
+			if (line.empty())
+			{
+				std::cout << RED << "This field cannot be empty. "
+				"Please try again." << RESET << std::endl;
+				continue ;
+			}
+		}
+		if (i == 0)
+			contact.SetFirstName(line);
+		else if (i == 1)
+			contact.SetLastName(line);
+		else if (i == 2)
+			contact.SetNickname(line);
+		else if (i == 3)
+			contact.SetNum(line);
+		else if (i == 4)
+		{
+			contact.SetDarkestSecret(line);
+			std::cout << std::endl;
+			break ;
+		}
+		i++;
 	}
-	else if (line.compare("SEARCH") == 0)
+	repertory->AddContact(contact);
+}
+
+static bool	search_contact(std::string line, PhoneBook *repertory)
+{
+	int	id = 0;
+
+	if (!print_contacts(repertory))
+		return (false);
+	while (true)
 	{
-		print_contacts(repertory);
-		std::cout << "Enter the index of the contact you want to see: ";
+		std::cout 	<< "Enter the index of the contact you want to see " 
+					<< GREY << "(or 0 to leave)" << RESET << ": ";
 		if (getline(std::cin, line))
 		{
-			i = ft_stoi(line);
-			print_contact(repertory->GetContact(i - 1), i, -1);
+			id = ft_stoi(line);
+			if (id == 0)
+				break ;
+			if (id < 0 || id > 8)
+			{
+				std::cout << RED << "Error: invalid index. Please enter a number"
+					" between 1 and 8." << RESET << std::endl;
+				line.clear();
+				continue ;
+			}
+			print_contact(repertory->GetContact(id - 1), id, -1);
+			break ;
 		}
 		else
 			std::cout << std::endl;
 	}
+	return (true);
+}
+
+static bool	trait_command(std::string line, PhoneBook *repertory)
+{
+	if (line.compare("ADD") == 0)
+	{
+		add_contact(line, repertory);
+	}
+	else if (line.compare("SEARCH") == 0)
+	{
+		if (!search_contact(line, repertory))
+			return (true);
+	}
 	else if (line.compare("EXIT") == 0)
 	{
 		std::cout << "Exiting the phone book." << std::endl;
-		exit(0);
+		return (false);
 	}
 	else
 	{
-		std::cout << "Error: unknown command `" << line << "' . Please type ADD, SEARCH or EXIT" << std::endl;
+		std::cout << RED << "Error: unknown command "
+		"`" << RESET << line << RED << "' . Please type ADD, SEARCH or EXIT"
+		   << RESET << std::endl;
 	}
+	return (true);
 }
 
 int	main()
@@ -200,6 +258,7 @@ int	main()
 	PhoneBook repertory;
 	std::string line;
 
+	std::cout << BOLD << GREEN << "Welcome to the Phone Book!" << RESET << std::endl;
 	while (true)
 	{
 		std::cout << BOLD << "> " << RESET;
@@ -210,7 +269,8 @@ int	main()
 		}
 		if (!check_line(line))
 			continue ;
-		trait_command(line, &repertory);
-		line.empty();
+		if (!trait_command(line, &repertory))
+			break ;
+		line.clear();
 	}
 }

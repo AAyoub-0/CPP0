@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   megaphone.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboumall <aboumall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:08:00 by aboumall          #+#    #+#             */
-/*   Updated: 2025/06/13 16:32:34 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/09/27 22:30:01 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
 #include <algorithm>
-#include <cctype>
 
 char	to_upper_case(unsigned char c)
 {
@@ -38,6 +37,6 @@ int main(int argc, char* argv[])
 		else
 			std::cout << std::endl;
     }
-
+	
 	return 0;
 }

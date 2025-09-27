@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:46:23 by aboumall          #+#    #+#             */
-/*   Updated: 2025/07/07 23:51:25 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/09/27 23:30:22 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "Contact.hpp"
 #include "vector"
 
+#define nullptr 0
+
 class PhoneBook
 {
 	private:
@@ -26,7 +28,7 @@ class PhoneBook
 		PhoneBook(Contact *contacts, int size);
 		PhoneBook();
 		void AddContact(Contact contact);
-		Contact GetContact(int index);
+		Contact *GetContact(int index);
 		Contact *GetContacts();
 };
 
@@ -58,14 +60,11 @@ void PhoneBook::AddContact(Contact contact)
 	}
 }
 
-Contact PhoneBook::GetContact(int index)
+Contact *PhoneBook::GetContact(int index)
 {
-	if (index > 7 || index < 0 || this->index <= 0)
-	{
-		std::cout << "Contact number" << index << "doesn't exist" << std::endl;
-		return Contact();
-	}
-	return this->contacts[index];
+	if (index > 7 || index < 0 || this->index <= 0 || index >= this->index)
+		return (Contact *)nullptr;
+	return &this->contacts[index];
 }
 
 #endif

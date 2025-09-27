@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aboumall <aboumall@student.42.fr>          +#+  +:+       +#+         #
+#    By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/13 15:52:18 by aboumall          #+#    #+#              #
-#    Updated: 2025/06/18 19:53:20 by aboumall         ###   ########.fr        #
+#    Updated: 2025/09/27 23:31:46 by aboumall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+HEADERS = PhoneBook.hpp Contact.hpp
 
 TARGET = myphonebook
 
@@ -19,7 +21,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
-all: $(TARGET)
+all: $(TARGET) $(HEADERS)
 
 $(TARGET): $(OBJ)
 	$(CXX) $(OBJ) -o $(TARGET)
