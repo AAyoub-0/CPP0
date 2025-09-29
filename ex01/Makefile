@@ -6,7 +6,7 @@
 #    By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/13 15:52:18 by aboumall          #+#    #+#              #
-#    Updated: 2025/09/27 23:31:46 by aboumall         ###   ########.fr        #
+#    Updated: 2025/09/29 15:30:44 by aboumall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp
+SRC = main.cpp PhoneBook.cpp Contact.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(TARGET) $(HEADERS)
