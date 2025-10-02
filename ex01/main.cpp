@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 18:40:30 by aboumall          #+#    #+#             */
-/*   Updated: 2025/09/28 00:39:20 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/10/03 01:26:31 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #define RED "\033[31m"
 #define GREEN "\033[32m"
 #define BLUE "\033[34m"
+#define ORANGE "\033[38;5;208m"
 #define RESET "\033[0m"
 
 static int ft_stoi(const std::string &str)
@@ -147,15 +148,15 @@ static void	add_contact(std::string line, PhoneBook *repertory)
 	{
 		line.clear();
 		if (i == 0)
-			std::cout << std::left << std::setw(16) << "First Name " << ": ";
+			std::cout << std::left << std::setw(21) << "First Name (50)" << ": ";
 		else if (i == 1)
-			std::cout << std::left << std::setw(16) << "Last Name " << ": ";
+			std::cout << std::left << std::setw(21) << "Last Name (50)" << ": ";
 		else if (i == 2)
-			std::cout << std::left << std::setw(16) << "Nickname " << ": ";
+			std::cout << std::left << std::setw(21) << "Nickname (50)" << ": ";
 		else if (i == 3)
-			std::cout << std::left << std::setw(16) << "Phone Number " << ": ";
+			std::cout << std::left << std::setw(21) << "Phone Number " << ": ";
 		else if (i == 4)
-			std::cout << std::left << std::setw(16) << "Darkest Secret " << ": ";
+			std::cout << std::left << std::setw(21) << "Darkest Secret (500)" << ": ";
 		std::cout << GREY;
 		getline(std::cin, line);
 		std::cout << RESET;
@@ -171,11 +172,23 @@ static void	add_contact(std::string line, PhoneBook *repertory)
 		}
 		else
 		{
-			if (line.empty())
+			if (i != 2 && line.empty())
 			{
 				std::cout << RED << "This field cannot be empty. "
 				"Please try again." << RESET << std::endl;
 				continue ;
+			}
+			if (i != 4 && line.size() > 50)
+			{
+				std::cout << ORANGE << "Field too long. "
+				"Will be truncated to 50 chars." << RESET << std::endl;
+				line.resize(50);
+			}
+			if (i == 4 && line.size() > 500)
+			{
+				std::cout << ORANGE << "Field too long. "
+				"Will be truncated to 500 chars." << RESET << std::endl;
+				line.resize(500);
 			}
 		}
 		if (i == 0)

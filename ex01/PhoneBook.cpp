@@ -6,7 +6,7 @@
 /*   By: aboumall <aboumall42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 15:30:02 by aboumall          #+#    #+#             */
-/*   Updated: 2025/09/29 15:30:17 by aboumall         ###   ########.fr       */
+/*   Updated: 2025/10/03 01:09:16 by aboumall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ void PhoneBook::AddContact(Contact contact)
 		this->contacts[index] = contact;
 		index++;
 	} else {
-		index = 7;
-		this->contacts[index] = contact;
+		this->contacts[7] = contact;
 	}
 }
 
